@@ -2,7 +2,9 @@
 
 
 Scene::Scene() {
-
+    #ifdef DEBUG
+        AddGameObject(new DebugObject());
+    #endif
 }
 
 Scene::~Scene() {
@@ -22,6 +24,12 @@ void Scene::AddGameObject(GameObject* go){
             }
         }
     }
+}
+
+Scene* Scene::_activeScene = nullptr;
+
+Scene* Scene::getActiveScene(){
+    return _activeScene;
 }
 
 void Scene::Start(){
@@ -64,16 +72,23 @@ void Scene::Render(int width, int height){
     glViewport(0, 0, width, height);
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    if(Debug::isEnabled()){
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+
 
     glm::mat4 view = camera->getViewMatrix();
     glm::mat4 projection = camera->getProjectionMatrix();
     glm::mat4 orthoMatrix = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 
 
-    for(auto* go : _gameObjets){
-        cMeshView* ptr  = go->getFirstComponent<cMeshView>();
-        if(ptr != nullptr && ptr->isEnabled()){
-            ptr->Draw(view, projection, orthoMatrix);
-        }
+    std::vector<IDrawableComponent*> drawables = getComponentsOfType<IDrawableComponent>();
+    for(IDrawableComponent* component : drawables){
+        component->Draw(view, projection, orthoMatrix);
+    }
+
+    if(Debug::isEnabled()){
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 }

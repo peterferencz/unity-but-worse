@@ -13,6 +13,6 @@ mSimpleColor::~mSimpleColor(){
 
 }
 
-void mSimpleColor::Draw(){
+void mSimpleColor::Draw() const{
     setUniform("uColor", color);
 }

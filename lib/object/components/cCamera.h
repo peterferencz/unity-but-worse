@@ -15,11 +15,15 @@ private:
     float _near;
     float _far;
 
+    cTransform* _transform = nullptr;
+
 public:
     cCamera();
 
     void setFov(float fov);
     void setAspectRatio(float aspectratio);
+
+    glm::vec3 forward();
 
     glm::mat4 getViewMatrix();
     glm::mat4 getProjectionMatrix();

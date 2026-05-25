@@ -13,7 +13,7 @@ mSimpleTexture::~mSimpleTexture(){
     delete _texture;
 }
 
-void mSimpleTexture::Draw(){
+void mSimpleTexture::Draw() const {
     _texture->Bind();
     setUniform("uTexture", 0);
 }

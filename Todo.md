@@ -1,4 +1,5 @@
 - Gizmo drawing
-- Debug information
 - Text rendering
 - Shader cache
+- separate 2d and 3d rendering into different components
+- use smart pointers for materials/textures

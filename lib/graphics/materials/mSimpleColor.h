@@ -11,5 +11,5 @@ public:
     mSimpleColor(glm::vec3 color);
     ~mSimpleColor();
 
-    void Draw() override;
+    void Draw() const override;
 };

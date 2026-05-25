@@ -17,7 +17,9 @@ public:
         
         T* found = _gameObject->getFirstComponent<T>();
         if(found == nullptr){
-            Logger::Error("Component was not found on attached gameobject (requirecomponent), disabling component");
+            std::string errorMsg = std::string("[") + typeid(*this).name() + "] requires component \"" 
+                + typeid(T).name() + "\", but it was not found on the GameObject. Disabling component.";
+            Logger::Error(errorMsg);
             setEnabled(false);
         }else{
             var = found;

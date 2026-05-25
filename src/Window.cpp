@@ -101,6 +101,7 @@ void Window::scb_mouse_button(GLFWwindow* window, int button, int action, int mo
 
 void Window::setScene(Scene& scene){
     _scene = &scene;
+    Scene::_activeScene = _scene;
 }
 
 const Scene& Window::getScene(){

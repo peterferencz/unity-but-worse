@@ -1,17 +1,17 @@
-#include "custom/FpsCameraController.h"
+#include "custom/FreeCameraController.h"
 
-void FpsCamerController::onAwake() {
+void FreeCameraController::onAwake() {
     requireComponent(_transform);
     requireComponent(_camera);
 }
 
-void FpsCamerController::onStart(){
+void FreeCameraController::onStart(){
     Input::captureCursor();
     _lastMousePos = Input::getCursorPosition();
     _focused = true;
 }
 
-void FpsCamerController::onUpdate(){
+void FreeCameraController::onUpdate(){
     glm::vec2 currentMouse = Input::getCursorPosition();
     glm::vec2 delta = _focused ? currentMouse - _lastMousePos : glm::vec2(0,0);
     _lastMousePos = currentMouse;

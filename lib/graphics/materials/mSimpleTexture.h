@@ -15,5 +15,5 @@ public:
     mSimpleTexture(Texture* texture);
     ~mSimpleTexture();
 
-    void Draw() override;
+    void Draw() const override;
 };

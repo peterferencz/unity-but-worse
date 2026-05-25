@@ -18,21 +18,28 @@ void cCamera::setFov(float fov){
 }
 
 glm::mat4 cCamera::getViewMatrix(){
-    cTransform* transform = _gameObject->getFirstComponent<cTransform>();
-    if(transform == nullptr){
-        Logger::Error("No transform on gameobject with camera");
-        return glm::mat4(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+    if(_transform == nullptr) {
+        _transform = _gameObject->getFirstComponent<cTransform>();
+        
+        if(_transform == nullptr){
+            Logger::Error("No transform on gameobject with camera");
+            return glm::mat4(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+        }
     }
 
-    glm::vec3 pos = transform->getPosition();
-    glm::vec3 rot = transform->getRotation();
+    glm::vec3 pos = _transform->getPosition();
 
-    glm::vec3 front;
-    front.x = cos(glm::radians(rot.y)) * cos(glm::radians(rot.x));
-    front.y = sin(glm::radians(rot.x));
-    front.z = sin(glm::radians(rot.y)) * cos(glm::radians(rot.x));
+    return glm::lookAt(pos, pos + forward(), glm::vec3(0.0f, 1.0f, 0.0f));
+}
 
-    return glm::lookAt(pos, pos + glm::normalize(front), glm::vec3(0.0f, 1.0f, 0.0f));
+glm::vec3 cCamera::forward(){
+    glm::vec3 rot = _transform->getRotation();
+    glm::vec3 forward;
+    forward.x = cos(glm::radians(rot.y)) * cos(glm::radians(rot.x));
+    forward.y = sin(glm::radians(rot.x));
+    forward.z = sin(glm::radians(rot.y)) * cos(glm::radians(rot.x));
+
+    return glm::normalize(forward);
 }
 
 glm::mat4 cCamera::getProjectionMatrix() {

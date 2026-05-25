@@ -6,7 +6,7 @@
 #include "glm/vec3.hpp"
 #include "object/prefabs/Camera.h"
 #include "object/prefabs/Plane.h"
-#include "custom/FpsCameraController.h"
+#include "custom/FreeCameraController.h"
 #include "custom/Rotator.h"
 #include "graphics/materials/mSimpleTexture.h"
 #include "object/components/cTransform2D.h"
@@ -17,6 +17,7 @@ int main(){
 
     Window w(700, 600, "Hehe");
 
+#pragma region Main scene
     Scene main;
     Cube* cube = new Cube(glm::vec3(1, 1, 1));
     cube->getFirstComponent<cTransform>()->getPosition() = glm::vec3(0, 0.5f, 0);
@@ -34,7 +35,7 @@ int main(){
 
     Camera* camera = new Camera();
     camera->getFirstComponent<cTransform>()->getPosition() = glm::vec3(-5, 1, 0);
-    camera->addComponent(new FpsCamerController());
+    camera->addComponent(new FreeCameraController());
 
     Cube* checker = new Cube(glm::vec3(1, 1, 1));
     checker->getFirstComponent<cTransform>()->getPosition() = glm::vec3(3, 0.5f, 0);
@@ -60,9 +61,21 @@ int main(){
     main.AddGameObject(camera);
     main.AddGameObject(uiImg);
     main.AddGameObject(cursor);
+#pragma endregion
 
-    w.setScene(main);
+
+    Scene game;
+    
+    Plane* pl = new Plane(glm::vec2(10,10));
+
+    Camera* cam = new Camera();
+    cam->getFirstComponent<cTransform>()->getPosition() = glm::vec3(-5, 1, 0);
+    cam->addComponent(new FreeCameraController());
+
+    game.AddGameObject(pl);
+    game.AddGameObject(cam);
     
 
+    w.setScene(game);
     w.MainLoop();
 }

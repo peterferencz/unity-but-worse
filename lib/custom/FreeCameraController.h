@@ -9,7 +9,7 @@
 #include "Time.h"
 
 //required: cCamera
-class FpsCamerController : public cBehaviour {
+class FreeCameraController : public cBehaviour {
 private:
     cTransform* _transform;
     cCamera* _camera;

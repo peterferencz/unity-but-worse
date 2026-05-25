@@ -3,15 +3,24 @@
 #include <vector>
 
 #include "Logger.h"
+#include "Debug.h"
 #include "object/GameObject.hpp"
 #include "object/components/cCamera.h"
 #include "object/components/cMeshView.h"
 #include "object/components/cBehaviour.h"
+#ifdef DEBUG
+    #include "object/prefabs/DebugObject.h"
+#endif
+
+class Window;   //FWDecl
 
 class Scene {
+friend class Window;
 private:
     std::vector<GameObject*> _gameObjets;
     bool _hasStarted = false;
+
+    static Scene* _activeScene;
 
 public:
     Scene();
@@ -24,8 +33,8 @@ public:
 
     void Render(int width, int height);
     
+    static Scene* getActiveScene();
 
-    
     template <typename T>
     std::vector<T*> getComponentsOfType(){
         std::vector<T*> components;
