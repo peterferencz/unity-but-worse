@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/lib",
+                "${workspaceFolder}/vendor/glfw-3.4/include",
+                "${workspaceFolder}/vendor/glad/include",
+                "${workspaceFolder}/vendor/glm",
+                "${workspaceFolder}/vendor/stb"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}
