@@ -12,7 +12,7 @@ protected:
     
 public:
     GameObject();
-    GameObject(std::vector<Component*> components);
+    GameObject(std::initializer_list<Component*> components);
     virtual ~GameObject();
 
 

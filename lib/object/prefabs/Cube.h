@@ -14,7 +14,7 @@ private:
 
 public:
 
-    Cube(glm::vec3 dimensions);
+    Cube(glm::vec3 dimensions = glm::vec3(1));
     ~Cube();
 
 };

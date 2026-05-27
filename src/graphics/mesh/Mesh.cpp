@@ -1,6 +1,7 @@
 #include "graphics/mesh/Mesh.h"
 
-Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices){
+Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
+: _verticies(vertices), _indices(indices) {
     setupMesh(vertices, indices);
 }
 
@@ -18,6 +19,12 @@ void Mesh::Unbind() {
     glBindVertexArray(0);
 }
 
+std::vector<Vertex>& Mesh::getVerticies(){
+    return _verticies;
+}
+std::vector<unsigned int>& Mesh::getIndicies(){
+    return _indices;
+}
 
 void Mesh::setupMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices) {
     _indexCount = static_cast<unsigned int>(indices.size());

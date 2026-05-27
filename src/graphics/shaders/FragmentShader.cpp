@@ -12,9 +12,9 @@ FragmentShader::FragmentShader(std::string path)
     if (!success) {
         char infoLog[512];
         glGetShaderInfoLog(_shaderId, 512, NULL, infoLog);
-        Logger::Error("Shader compilation failed: " + std::string(infoLog));
+        Logger::Error("[Shader] Shader compilation failed: " + std::string(infoLog));
     }
-    Logger::Log("Loaded fragment shader: " + path);
+    Logger::Log("[Shader] Loaded fragment shader: " + path);
 }
 
 FragmentShader::~FragmentShader(){

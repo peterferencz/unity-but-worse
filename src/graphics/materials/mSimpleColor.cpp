@@ -1,9 +1,11 @@
 #include "graphics/materials/mSimpleColor.h"
 
+#include "graphics/shaders/ShaderCache.h"
+
 mSimpleColor::mSimpleColor(glm::vec3 color)
 : Material(
-    new VertexShader("resources/shaders/vertexshader.glsl"),
-    new FragmentShader("resources/shaders/simpleColor.glsl")
+    ShaderCache::getVertexShader("resources/shaders/vertexshader.glsl"),
+    ShaderCache::getFragmentShader("resources/shaders/simpleColor.glsl")
 ),
 color(color) {
 

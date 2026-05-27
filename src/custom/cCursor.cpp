@@ -11,7 +11,7 @@ cCursor::~cCursor(){
 
 void cCursor::onAwake(){
     requireComponent(_transform);
-    requireComponent(_meshView);
+    requireComponent(_view);
 }
 
 void cCursor::onStart(){
@@ -19,7 +19,7 @@ void cCursor::onStart(){
 }
 
 void cCursor::onUpdate(){
-    _meshView->setEnabled(!Input::isCursorCaptured());
+    _view->setEnabled(!Input::isCursorCaptured());
     
     _transform->getPosition() = Input::getCursorPosition() + _offset;
 }

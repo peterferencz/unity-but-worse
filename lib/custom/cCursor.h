@@ -2,7 +2,7 @@
 
 #include "object/components/cBehaviour.h"
 #include "object/components/cTransform2D.h"
-#include "object/components/cMeshView.h"
+#include "object/components/cScreenView.h"
 #include "graphics/shaders/Texture.h"
 #include "Input.h"
 
@@ -10,7 +10,7 @@ class cCursor : public cBehaviour {
 private:
 
     cTransform2D* _transform;
-    cMeshView* _meshView;
+    cScreenView* _view;
     glm::vec2 _offset;
 
 public:

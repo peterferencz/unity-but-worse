@@ -11,14 +11,19 @@
 #include "graphics/materials/mSimpleTexture.h"
 #include "object/components/cTransform2D.h"
 #include "custom/cCursor.h"
+#include "custom/cCameraRayMaterialChanger.h"
+#include "object/components/cMeshCollider.h"
+#include "custom/cAlign.h"
+#include "graphics/shaders/ShaderCache.h"
+#include "graphics/mesh/CubeMesh.h"
+#include "custom/shooting/cMoveManager.h"
+#include "custom/shooting/cGun.h"
+#include "object/components/cScreenView.h"
+#include "custom/shooting/cEnemySpawner.h"
 
-int main(){
-    Logger::Log("Program start");
+Scene* genFunkyScene(){
+    Scene* scene = new Scene();
 
-    Window w(700, 600, "Hehe");
-
-#pragma region Main scene
-    Scene main;
     Cube* cube = new Cube(glm::vec3(1, 1, 1));
     cube->getFirstComponent<cTransform>()->getPosition() = glm::vec3(0, 0.5f, 0);
     cube->getFirstComponent<cMeshView>()->setMaterial(new mSimpleColor(glm::vec3(0.7f,0.7f, 0.85f)));
@@ -40,42 +45,112 @@ int main(){
     Cube* checker = new Cube(glm::vec3(1, 1, 1));
     checker->getFirstComponent<cTransform>()->getPosition() = glm::vec3(3, 0.5f, 0);
     checker->getFirstComponent<cMeshView>()->setMaterial(new Material(
-        new VertexShader("resources/shaders/vertexshader.glsl"),
-        new FragmentShader("resources/shaders/fCensored.glsl")
+        ShaderCache::getVertexShader("resources/shaders/vertexshader.glsl"),
+        ShaderCache::getFragmentShader("resources/shaders/fCensored.glsl")
     ));
 
 
     GameObject* uiImg = new GameObject();
     uiImg->addComponent(new cTransform2D(glm::vec2(300, 250), glm::vec2(0), glm::vec2(128, 128)));
-    uiImg->addComponent(new cMeshView(new QuadMesh(), new mSimpleTexture(new Texture("resources/images/time.jpg"))));
+    uiImg->addComponent(new cScreenView(new QuadMesh(), new mSimpleTexture(new Texture("resources/images/time.jpg"))));
     
     GameObject* cursor = new GameObject();
     cursor->addComponent(new cTransform2D(glm::vec2(0), glm::vec2(0), glm::vec2(300, 300)));
-    cursor->addComponent(new cMeshView(new QuadMesh(), new mSimpleTexture(new Texture("resources/images/pointer.png"))));
+    cursor->addComponent(new cScreenView(new QuadMesh(), new mSimpleTexture(new Texture("resources/images/pointer.png"))));
     cursor->addComponent(new cCursor(glm::vec2(-28, 39)));
 
-    main.AddGameObject(cube);
-    main.AddGameObject(szirmay);
-    main.AddGameObject(plane);
-    main.AddGameObject(checker);
-    main.AddGameObject(camera);
-    main.AddGameObject(uiImg);
-    main.AddGameObject(cursor);
-#pragma endregion
+    scene->AddGameObject(cube);
+    scene->AddGameObject(szirmay);
+    scene->AddGameObject(plane);
+    scene->AddGameObject(checker);
+    scene->AddGameObject(camera);
+    scene->AddGameObject(uiImg);
+    scene->AddGameObject(cursor);
 
+    return scene;
+}
 
-    Scene game;
-    
-    Plane* pl = new Plane(glm::vec2(10,10));
+Scene* genRaycastScene(){
+    Scene* scene = new Scene();
 
     Camera* cam = new Camera();
     cam->getFirstComponent<cTransform>()->getPosition() = glm::vec3(-5, 1, 0);
     cam->addComponent(new FreeCameraController());
+    cam->addComponent(new cCameraRayMaterialChanger());
+    scene->AddGameObject(cam);
 
-    game.AddGameObject(pl);
-    game.AddGameObject(cam);
+    for(int x = 0; x < 10; x++){
+        for(int y = 0; y < 10; y++){
+            Cube* target = new Cube();
+            target->getFirstComponent<cTransform>()->getPosition() = glm::vec3(x *1.5f , 0, y * 1.5f);
+            target->getFirstComponent<cMeshView>()->setMaterial(new mSimpleColor(glm::vec3(.7,.7,.7)));
+            target->addComponent(new cMeshCollider());
+            scene->AddGameObject(target);
+        }
+    }
+
+    GameObject* fpsCursor = new GameObject();
+    fpsCursor->addComponent(new cTransform2D(glm::vec2(10, 10), glm::vec2(0), glm::vec2(10, 10)));
+    fpsCursor->addComponent(new cScreenView(new QuadMesh(), new mSimpleColor(glm::vec3(1,1,1))));
+    fpsCursor->addComponent(new cAlign(HorizontalAlignment::Center, VerticalAlignment::Middle));
+    scene->AddGameObject(fpsCursor);
+
+    return scene;
+}
+
+Scene* genGameScene(){
+    Scene* scene = new Scene();
+
+    GameObject* player = new GameObject{
+        new cTransform(glm::vec3(0, 1, 0), glm::vec3(0), glm::vec3(1, 2, 1)),
+        new cMeshView(new CubeMesh(), new mSimpleColor(glm::vec3(1,0,0))),
+        new cCamera(),
+        new cMoveManager(),
+    };
+
+    GameObject* gun = new GameObject{
+        new cTransform2D(glm::vec2(0), glm::vec2(0), glm::vec2(300, 300)),
+        new cScreenView(new QuadMesh(), new mSimpleTexture(new Texture("resources/images/gun.png"))),
+        new cAlign(HorizontalAlignment::Center, VerticalAlignment::Bottom),
+        new cGun()
+    };
+
+    GameObject* crosshair = new GameObject{
+        new cTransform2D(glm::vec2(0), glm::vec2(0), glm::vec2(10, 10)),
+        new cScreenView(new QuadMesh(), new mSimpleColor(glm::vec3(1))),
+        new cAlign(HorizontalAlignment::Center, VerticalAlignment::Middle)
+    };
+
+    GameObject* spawner = new GameObject{
+        new cEnemySpawner()
+    };
+
+    Plane* plane = new Plane(glm::vec2(10,10));
+    plane->getFirstComponent<cMeshView>()->setMaterial(new mSimpleTexture(new Texture("resources/images/grass.png")));
+
+    scene->AddGameObject(player);
+    scene->AddGameObject(gun);
+    scene->AddGameObject(crosshair);
+    scene->AddGameObject(plane);
+    scene->AddGameObject(spawner);
+
+    return scene;
+}
+
+int main(){
+    Logger::Log("Program start");
+
+    Window w(700, 600, "Hehe");
+
+    // Scene* main = genFunkyScene();
+    // w.setScene(*main);
+
+    // Scene* ray = genRaycastScene();
+    // w.setScene(*ray);
+    
+    Scene* game = genGameScene();
+    w.setScene(*game);
     
 
-    w.setScene(game);
     w.MainLoop();
 }

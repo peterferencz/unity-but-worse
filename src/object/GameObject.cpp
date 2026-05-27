@@ -3,9 +3,10 @@
 GameObject::GameObject() {
 }
 
-GameObject::GameObject(std::vector<Component*> components)
-: _components(components) {
-    
+GameObject::GameObject(std::initializer_list<Component*> components) {
+    for (Component* comp : components) {
+        addComponent(comp);
+    }
 }
 
 GameObject::~GameObject() {

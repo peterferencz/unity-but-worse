@@ -1,9 +1,11 @@
 #include "graphics/materials/mSimpleTexture.h"
 
+#include "graphics/shaders/ShaderCache.h"
+
 mSimpleTexture::mSimpleTexture(Texture* texture)
 : Material(
-    new VertexShader("resources/shaders/vertexshader.glsl"),
-    new FragmentShader("resources/shaders/fSimpleTexture.glsl")
+    ShaderCache::getVertexShader("resources/shaders/vertexshader.glsl"),
+    ShaderCache::getFragmentShader("resources/shaders/fSimpleTexture.glsl")
 ),
 _texture(texture) {
 

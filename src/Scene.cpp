@@ -1,5 +1,8 @@
 #include "Scene.hpp"
 
+#include "object/components/cMeshView.h"
+#include "object/components/cScreenView.h"
+
 
 Scene::Scene() {
     #ifdef DEBUG
@@ -73,9 +76,7 @@ void Scene::Render(int width, int height){
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    if(Debug::isEnabled()){
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    }
+    
 
 
     glm::mat4 view = camera->getViewMatrix();
@@ -83,12 +84,14 @@ void Scene::Render(int width, int height){
     glm::mat4 orthoMatrix = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 
 
-    std::vector<IDrawableComponent*> drawables = getComponentsOfType<IDrawableComponent>();
-    for(IDrawableComponent* component : drawables){
+    std::vector<cMeshView*> drawableMeshes = getEnabledComponentsOfType<cMeshView>();
+    for(cMeshView* component : drawableMeshes){
         component->Draw(view, projection, orthoMatrix);
     }
 
-    if(Debug::isEnabled()){
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    std::vector<cScreenView*> drawableScreenRects = getEnabledComponentsOfType<cScreenView>();
+    for(cScreenView* component : drawableScreenRects){
+        component->Draw(view, projection, orthoMatrix);
     }
 }

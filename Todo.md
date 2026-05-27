@@ -3,3 +3,5 @@
 - Shader cache
 - separate 2d and 3d rendering into different components
 - use smart pointers for materials/textures
+- Ability to update Mesh vertecies
+- requirecomponent for not cBehaviour components

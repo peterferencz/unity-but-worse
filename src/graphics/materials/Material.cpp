@@ -11,8 +11,7 @@ _fragmentShader(fragmentShader) {
 }
 
 Material::~Material(){
-    delete _vertexShader;
-    delete _fragmentShader;
+    
 }
 
 void Material::Use() const {

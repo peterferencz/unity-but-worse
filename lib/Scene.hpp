@@ -6,8 +6,8 @@
 #include "Debug.h"
 #include "object/GameObject.hpp"
 #include "object/components/cCamera.h"
-#include "object/components/cMeshView.h"
 #include "object/components/cBehaviour.h"
+
 #ifdef DEBUG
     #include "object/prefabs/DebugObject.h"
 #endif
@@ -21,6 +21,7 @@ private:
     bool _hasStarted = false;
 
     static Scene* _activeScene;
+    
 
 public:
     Scene();
@@ -32,6 +33,8 @@ public:
     void AddGameObject(GameObject* go);
 
     void Render(int width, int height);
+
+    ShaderCache& getShaderStore();
     
     static Scene* getActiveScene();
 

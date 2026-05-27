@@ -2,12 +2,17 @@
 
 #include "Shader.h"
 
+class ShaderCache;  //FWDecl
+
 class FragmentShader : public Shader {
+friend class ShaderCache;
 private:
     unsigned int _shaderId;
 
-public:
+protected:
     FragmentShader(std::string path);
+    
+public:
     ~FragmentShader();
 
     unsigned int getGlShaderId();

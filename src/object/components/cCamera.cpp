@@ -42,6 +42,10 @@ glm::vec3 cCamera::forward(){
     return glm::normalize(forward);
 }
 
+Ray cCamera::forwardRay(){
+    return Ray(_transform->getPosition(), forward());
+}
+
 glm::mat4 cCamera::getProjectionMatrix() {
     return glm::perspective(glm::radians(_fov), _aspectRatio, _near, _far);
 }

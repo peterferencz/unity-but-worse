@@ -6,6 +6,7 @@
 #include "glm/vec3.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "physics/Physics.h"
 
 // Requires Transform
 class cCamera : public Component {
@@ -24,6 +25,7 @@ public:
     void setAspectRatio(float aspectratio);
 
     glm::vec3 forward();
+    Ray forwardRay();
 
     glm::mat4 getViewMatrix();
     glm::mat4 getProjectionMatrix();
