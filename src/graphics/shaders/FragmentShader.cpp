@@ -1,7 +1,10 @@
 #include "graphics/shaders/FragmentShader.h"
 
-FragmentShader::FragmentShader(std::string path)
-:Shader(path) {
+#include "glad/gl.h"
+#include "Logger.h"
+
+FragmentShader::FragmentShader(std::string path, ConstructorToken t)
+:Shader(path, t) {
     _shaderId = glCreateShader(GL_FRAGMENT_SHADER);
     const char* source = _fileContent.c_str();
     glShaderSource(_shaderId, 1, &source, NULL);

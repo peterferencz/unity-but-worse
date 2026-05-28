@@ -1,8 +1,15 @@
+#include "glad/gl.h"
+
 #include "graphics/mesh/Mesh.h"
+
 
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
 : _verticies(vertices), _indices(indices) {
-    setupMesh(vertices, indices);
+    glGenVertexArrays(1, &_vao);
+    glGenBuffers(1, &_vbo);
+    glGenBuffers(1, &_ebo);
+
+    uploadData(vertices, indices);
 }
 
 Mesh::~Mesh(){
@@ -26,12 +33,8 @@ std::vector<unsigned int>& Mesh::getIndicies(){
     return _indices;
 }
 
-void Mesh::setupMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices) {
+void Mesh::uploadData(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices) {
     _indexCount = static_cast<unsigned int>(indices.size());
-
-    glGenVertexArrays(1, &_vao);
-    glGenBuffers(1, &_vbo);
-    glGenBuffers(1, &_ebo);
 
     glBindVertexArray(_vao);
 

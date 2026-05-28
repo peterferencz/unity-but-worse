@@ -1,9 +1,11 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
-#include "glad/gl.h"
 #include "glm/glm.hpp"
+
+class MeshCache;    //FWDecl
 
 struct Vertex {
     glm::vec3 Position;
@@ -12,6 +14,8 @@ struct Vertex {
 };
 
 class Mesh{
+friend class MeshCache;
+// friend struct std::make_unique<T>
 private:
     unsigned int _vao, _vbo, _ebo;
     unsigned int _indexCount;
@@ -20,9 +24,17 @@ private:
     std::vector<unsigned int> _indices;
 
 protected:
-    void setupMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
+    /// @brief Uploads data to the GPU
+    /// @param vertices Vertex data
+    /// @param indices Triangle indicies
+    void uploadData(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
+    
+    
+    
 public:
+
+    Mesh();
     Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
     virtual ~Mesh();
 

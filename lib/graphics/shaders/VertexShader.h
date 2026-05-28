@@ -10,7 +10,7 @@ private:
     unsigned int _shaderId;
 
 protected:
-    VertexShader(std::string path);
+    VertexShader(std::string path, ConstructorToken);
 
 public:
     ~VertexShader();

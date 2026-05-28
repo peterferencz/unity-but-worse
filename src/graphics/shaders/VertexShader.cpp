@@ -1,7 +1,10 @@
 #include "graphics/shaders/VertexShader.h"
 
-VertexShader::VertexShader(std::string path)
-:Shader(path) {
+#include "glad/gl.h"
+#include "Logger.h"
+
+VertexShader::VertexShader(std::string path, ConstructorToken t)
+:Shader(path, t) {
     _shaderId = glCreateShader(GL_VERTEX_SHADER);
     const char* source = _fileContent.c_str();
     glShaderSource(_shaderId, 1, &source, NULL);

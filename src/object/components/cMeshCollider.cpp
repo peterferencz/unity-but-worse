@@ -5,7 +5,7 @@ cMeshCollider::cMeshCollider()
 
 }
 
-Mesh* cMeshCollider::getMesh() {
+Mesh& cMeshCollider::getMesh() {
     if(_meshView == nullptr){
         _meshView = _gameObject->getFirstComponent<cMeshView>();
     }

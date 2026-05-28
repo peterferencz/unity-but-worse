@@ -1,7 +1,13 @@
 #include "graphics/shaders/Shader.h"
 
+#include <fstream>
+#include <sstream>
 
-Shader::Shader(std::string path){
+#include "Logger.h"
+#include "glad/gl.h"
+
+
+Shader::Shader(std::string path, ConstructorToken){
     _fileContent = readFile(path);
 
     // _shaderId = glCreateShader(fragment ? GL_FRAGMENT_SHADER : GL_VERTEX_SHADER);

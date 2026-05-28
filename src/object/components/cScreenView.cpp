@@ -5,7 +5,7 @@
 #include "object/components/cTransform2D.h"
 #include "Time.h"
 
-cScreenView::cScreenView(Mesh* mesh, Material* material)
+cScreenView::cScreenView(Mesh& mesh, Material* material)
 :_mesh(mesh),
 _material(material),
 _debugMaterial(new mDebug()) {
@@ -13,7 +13,6 @@ _debugMaterial(new mDebug()) {
 }
 
 cScreenView::~cScreenView(){
-    delete _mesh;
     delete _material;
     delete _debugMaterial;
 }
@@ -27,7 +26,7 @@ void cScreenView::setMaterial(Material* material){
     _material = material;
 }
 
-Mesh* cScreenView::getMesh() {
+Mesh& cScreenView::getMesh() {
     return _mesh;
 }
 
@@ -57,9 +56,9 @@ void cScreenView::Draw(const glm::mat4& view, const glm::mat4& projection, const
     
     mat->Draw();
     
-    _mesh->Bind();
-    glDrawElements(GL_TRIANGLES, _mesh->getIndexCount(), GL_UNSIGNED_INT, 0);
-    _mesh->Unbind();
+    _mesh.Bind();
+    glDrawElements(GL_TRIANGLES, _mesh.getIndexCount(), GL_UNSIGNED_INT, 0);
+    _mesh.Unbind();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

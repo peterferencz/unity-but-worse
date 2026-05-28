@@ -2,19 +2,18 @@
 
 #include "graphics/shaders/VertexShader.h"
 #include "graphics/shaders/FragmentShader.h"
-#include "graphics/shaders/Texture.h"
+
 #include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
 
 class Material {
 private:
     unsigned int _gpuProg;
-    VertexShader* _vertexShader;
-    FragmentShader* _fragmentShader;
+    VertexShader& _vertexShader;
+    FragmentShader& _fragmentShader;
 
     
 public:
-    Material(VertexShader* vertexShader, FragmentShader* fragmentShader);
+    Material(VertexShader& vertexShader, FragmentShader& fragmentShader);
     virtual ~Material();
     void Use() const;
 

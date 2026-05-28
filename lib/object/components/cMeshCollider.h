@@ -15,6 +15,6 @@ public:
 
     void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& orthoMatrix = glm::mat4(1.0f)) override {};
 
-    Mesh* getMesh();
+    Mesh& getMesh();
     glm::mat4 getModelMatrix();
 };

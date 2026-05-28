@@ -10,9 +10,10 @@ private:
     unsigned int _shaderId;
 
 protected:
-    FragmentShader(std::string path);
-    
+
 public:
+    
+    FragmentShader(std::string path, ConstructorToken);
     ~FragmentShader();
 
     unsigned int getGlShaderId();

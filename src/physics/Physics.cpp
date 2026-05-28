@@ -43,8 +43,7 @@ RaycastHit Physics::Raycast(const Ray& worldRay) {
     std::vector<cMeshCollider*> colliders = Scene::getActiveScene()->getEnabledComponentsOfType<cMeshCollider>();
 
     for (cMeshCollider* collider : colliders) {
-        Mesh* mesh = collider->getMesh();
-        if (!mesh) continue;
+        Mesh& mesh = collider->getMesh();
 
         glm::mat4 modelMatrix = collider->getModelMatrix();
         glm::mat4 invModelMatrix = glm::inverse(modelMatrix);
@@ -57,8 +56,8 @@ RaycastHit Physics::Raycast(const Ray& worldRay) {
         
 
         // Extract vertex data from mesh
-        const std::vector<Vertex>& vertices = mesh->getVerticies();
-        const std::vector<unsigned int>& indices = mesh->getIndicies();
+        const std::vector<Vertex>& vertices = mesh.getVerticies();
+        const std::vector<unsigned int>& indices = mesh.getIndicies();
 
         // Iterate over all triangles in the mesh (3 indices per triangle)
         for (size_t i = 0; i < indices.size(); i += 3) {

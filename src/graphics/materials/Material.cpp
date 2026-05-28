@@ -1,12 +1,17 @@
+#include "glad/gl.h"
+
 #include "graphics/materials/Material.h"
 
+#include "graphics/shaders/Texture.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
-Material::Material(VertexShader* vertexShader, FragmentShader* fragmentShader)
+Material::Material(VertexShader& vertexShader, FragmentShader& fragmentShader)
 : _vertexShader(vertexShader),
 _fragmentShader(fragmentShader) {
     _gpuProg = glCreateProgram();
-    glAttachShader(_gpuProg, vertexShader->getGlShaderId());
-    glAttachShader(_gpuProg, fragmentShader->getGlShaderId());
+    glAttachShader(_gpuProg, vertexShader.getGlShaderId());
+    glAttachShader(_gpuProg, fragmentShader.getGlShaderId());
     glLinkProgram(_gpuProg);
 }
 

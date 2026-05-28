@@ -8,6 +8,7 @@
 #include <random>
 #include "custom/shooting/BirdMesh.h"
 #include "graphics/shaders/ShaderCache.h"
+#include "graphics/mesh/MeshCache.h"
 
 cEnemySpawner::cEnemySpawner(){
 
@@ -48,7 +49,7 @@ void cEnemySpawner::spawn(){
 
     GameObject* bird = new GameObject{
         new cTransform(spawnPosition, glm::vec3(0), glm::vec3(1)),
-        new cMeshView(new BirdMesh(), new Material(ShaderCache::getVertexShader("resources/shaders/vWobbleBird.glsl"), ShaderCache::getFragmentShader("resources/shaders/fCensored.glsl"))),
+        new cMeshView(MeshCache::getMesh<BirdMesh>(), new Material(ShaderCache::getVertexShader("resources/shaders/vWobbleBird.glsl"), ShaderCache::getFragmentShader("resources/shaders/fCensored.glsl"))),
         new cMeshCollider(),
         new cEnemy()
     };

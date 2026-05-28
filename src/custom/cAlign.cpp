@@ -1,3 +1,5 @@
+#include "glad/gl.h"
+
 #include "custom/cAlign.h"
 
 cAlign::cAlign(HorizontalAlignment const& ha, VerticalAlignment const& va)

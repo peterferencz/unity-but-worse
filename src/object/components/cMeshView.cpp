@@ -1,7 +1,7 @@
 #include "object/components/cMeshView.h"
 
 
-cMeshView::cMeshView(Mesh* mesh, Material* material)
+cMeshView::cMeshView(Mesh& mesh, Material* material)
 :_mesh(mesh),
 _material(material),
 _debugMaterial(new mDebug()) {
@@ -9,7 +9,6 @@ _debugMaterial(new mDebug()) {
 }
 
 cMeshView::~cMeshView(){
-    delete _mesh;
     delete _material;
     delete _debugMaterial;
 }
@@ -23,7 +22,7 @@ void cMeshView::setMaterial(Material* material){
     _material = material;
 }
 
-Mesh* cMeshView::getMesh() {
+Mesh& cMeshView::getMesh() {
     return _mesh;
 }
 
@@ -50,9 +49,9 @@ void cMeshView::Draw(const glm::mat4& view, const glm::mat4& projection, const g
     
     mat->Draw();
     
-    _mesh->Bind();
-    glDrawElements(GL_TRIANGLES, _mesh->getIndexCount(), GL_UNSIGNED_INT, 0);
-    _mesh->Unbind();
+    _mesh.Bind();
+    glDrawElements(GL_TRIANGLES, _mesh.getIndexCount(), GL_UNSIGNED_INT, 0);
+    _mesh.Unbind();
 
     if(Debug::isEnabled()){
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
