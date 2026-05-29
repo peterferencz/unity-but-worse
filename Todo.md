@@ -3,3 +3,5 @@
 - use smart pointers for materials
 - Ability to update Mesh vertecies
 - requirecomponent for not cBehaviour components
+- GameObject enable/disable
+- Gameobject hierarchy
