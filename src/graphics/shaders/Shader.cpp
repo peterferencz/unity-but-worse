@@ -9,20 +9,6 @@
 
 Shader::Shader(std::string path, ConstructorToken){
     _fileContent = readFile(path);
-
-    // _shaderId = glCreateShader(fragment ? GL_FRAGMENT_SHADER : GL_VERTEX_SHADER);
-    // const char* source = _fileContent.c_str();
-    // glShaderSource(_shaderId, 1, &source, NULL);
-    // glCompileShader(_shaderId);
-
-    // int success;
-    // glGetShaderiv(_shaderId, GL_COMPILE_STATUS, &success);
-    // if (!success) {
-    //     char infoLog[512];
-    //     glGetShaderInfoLog(_shaderId, 512, NULL, infoLog);
-    //     Logger::Error("Shader compilation failed: " + std::string(infoLog));
-    // }
-    // Logger::Log("Loaded shader: " + path);
 }
 
 Shader::~Shader(){

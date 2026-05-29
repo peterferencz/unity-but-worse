@@ -16,7 +16,7 @@ _fragmentShader(fragmentShader) {
 }
 
 Material::~Material(){
-    
+    glDeleteProgram(_gpuProg);
 }
 
 void Material::Use() const {

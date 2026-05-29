@@ -21,7 +21,7 @@ VertexShader::VertexShader(std::string path, ConstructorToken t)
 }
 
 VertexShader::~VertexShader(){
-    
+    glDeleteShader(_shaderId);
 }
 
 unsigned int VertexShader::getGlShaderId(){

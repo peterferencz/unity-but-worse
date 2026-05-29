@@ -21,7 +21,7 @@ FragmentShader::FragmentShader(std::string path, ConstructorToken t)
 }
 
 FragmentShader::~FragmentShader(){
-    
+    glDeleteShader(_shaderId);
 }
 
 unsigned int FragmentShader::getGlShaderId(){
