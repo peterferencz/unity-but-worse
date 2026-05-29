@@ -19,7 +19,7 @@ public:
     Component() {}
     virtual ~Component() {}
     
-    GameObject* getParent() { return _gameObject; }
+    GameObject* getGameObject() { return _gameObject; }
 
     bool isEnabled() {return _enabled;}
     void setEnabled(bool eanabled = true){_enabled = eanabled;}

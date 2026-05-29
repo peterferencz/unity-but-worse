@@ -80,7 +80,7 @@ RaycastHit Physics::Raycast(const Ray& worldRay) {
                     closestHit.hit = true;
                     closestHit.distance = worldDistance;
                     closestHit.point = worldHitPoint;
-                    closestHit.gameObject = collider->getParent();
+                    closestHit.gameObject = collider->getGameObject();
                 }
             }
         }

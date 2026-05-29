@@ -34,7 +34,7 @@ void cToggleDebug::onUpdate(){
         if(!cameras.empty()){
             _prevCam = cameras[0];
             _prevCam->setEnabled(false);
-            _transform->getPosition() = _prevCam->getParent()->getFirstComponent<cTransform>()->getPosition();
+            _transform->getPosition() = _prevCam->getGameObject()->getFirstComponent<cTransform>()->getPosition();
         }
 
         _camera->setEnabled();
