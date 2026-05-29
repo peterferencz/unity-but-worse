@@ -7,7 +7,7 @@ class ShaderCache;  //FWDecl
 class Shader {
 friend class ShaderCache;
 private:
-    std::string readFile(std::string path);
+    std::string readFile(const std::string& path);
 
 protected:
     std::string _fileContent;

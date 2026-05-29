@@ -4,8 +4,8 @@
 #include <iostream>
 
 namespace Logger {
-    void Log(std::string);
-    void Warn(std::string);
-    void Error(std::string);
-    void Fatal(std::string);
+    void Log(const std::string& message);
+    void Warn(const std::string& message);
+    void Error(const std::string& message);
+    void Fatal(const std::string& message);
 }

@@ -15,7 +15,7 @@ Shader::~Shader(){
 
 }
 
-std::string Shader::readFile(std::string path){
+std::string Shader::readFile(const std::string& path){
     std::ifstream fileStream(path, std::ios::in);
 
     if(!fileStream.is_open()) {
