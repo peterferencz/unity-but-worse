@@ -1,4 +1,6 @@
-build/
-Makefile
-App.make
-.vscode/
+Build/
+
+
+# Vscode premake generator files
+**/.vscode/
+*.code-workspace

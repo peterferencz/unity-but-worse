@@ -5,3 +5,5 @@
 - requirecomponent for not cBehaviour components
 - GameObject enable/disable
 - Gameobject hierarchy
+- Bake shaders into the framework using xxd
+- new type for color (0-1) instead of (0-255)

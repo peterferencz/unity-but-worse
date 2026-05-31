@@ -12,3 +12,10 @@
 * `GlfW` for OpenGL functions
 * `GLM` for math
 * `Stb` for image processing
+
+## Building
+THe following commands should be run from the root of the project
+```sh
+premake5 gmake2
+make -C Build -f Makefile -j 8 all
+```

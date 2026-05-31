@@ -1,75 +1,38 @@
-function includeGLFW()
-    local glfw_src = path.getabsolute("vendor/glfw-3.4")
-    local glfw_build = path.getabsolute("vendor/glfw-3.4/build")
+--
+-- Configuration
+--
+
+local BUILD_DIR = path.getabsolute("Build")
+local FRAMEWORK_DIR = path.getabsolute("Framework")
+
+--
+-- Helper functions
+--
+
+function prebuildGLFW()
+    local glfw_src = path.getabsolute(_MAIN_SCRIPT_DIR .. "/SharedVendor/glfw")
+    local glfw_build = path.getabsolute(BUILD_DIR .. "/glfw")
 
     prebuildcommands {
         "mkdir -p " .. glfw_build,
-        "cd " .. glfw_build .. " && cmake .. -DGLFW_BUILD_DOCS=OFF -DGLFW_BUILD_EXAMPLES=OFF -DGLFW_BUILD_TESTS=OFF",
-        "cd " .. glfw_build .. " && cmake --build . --config Release"
-    }
-
-    libdirs { glfw_build .. "/src" }
-    links { "glfw3" }
-    
-    includedirs {
-        "vendor/glfw-3.4/include"
+        "cmake -S ".. glfw_src .. " -B " .. glfw_build .. " -D GLFW_LIBRARY_TYPE=STATIC -D GLFW_BUILD_DOCS=OFF -D GLFW_BUILD_EXAMPLES=OFF -D GLFW_BUILD_TESTS=OFF",
+        "cmake --build " .. glfw_build .. " --config Release"
     }
 end
 
-function includeGlad()
-    includedirs "vendor/glad/include"
+-- 
+-- Workspace / Projects
+-- 
 
-    files "vendor/glad/src/gl.c"
-end
-
-function includeGLM()
-    includedirs "vendor/glm"
-end
-
-function includeStb()
-    includedirs "vendor/stb"
-end
-
-workspace "Project"
+workspace "OpenGLFramework"
     configurations { "Debug", "Release" }
     architecture "x64"
+    location (BUILD_DIR)
+
+    prebuildGLFW()
     
-    targetdir ("build/bin/%{prj.name}/%{cfg.longname}")
-	objdir ("build/obj/%{prj.name}/%{cfg.longname}")
+    targetdir (BUILD_DIR .. "/%{prj.name}/%{cfg.longname}/bin")
+	objdir (BUILD_DIR .. "/%{prj.name}/%{cfg.longname}/obj")
 
-project "App"
-    kind "ConsoleApp"
-    language "C++"
-    cppdialect "C++17"
-    
-    includedirs {
-        "lib",
-        "src"
-    }
-
-
-    files {
-        "src/**.cpp",
-        "src/**.hpp",
-        "lib/**.h",
-        "lib/**.hpp"
-    }
-    
-    includeGLFW()
-    includeGlad()
-    includeGLM()
-    includeStb()
-
-    filter "system:windows"
-        links { "opengl32" }
-    
-    filter "system:linux"
-        links { "GL", "pthread", "dl" }
-
-    filter "configurations:Debug"
-        defines { "DEBUG" }
-        symbols "On"
-
-    filter "configurations:Release"
-        defines { "NDEBUG" }
-        optimize "On"
+include "Framework"
+include "Examples/ShootingGame"
